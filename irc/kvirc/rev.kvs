@@ -1,0 +1,10 @@
+#reverse script
+
+%input = $string($0-)
+%len = $str.len(%input)
+
+for (%i = %len; %i >= 0; %i--){
+	%c = $str.mid(%input, %i, 1)
+	%res = $str.append(%res, %c)
+}
+say %res

@@ -1,0 +1,7 @@
+%flip[0] = "(ﾉ `Д´)ﾉ ~┻━┻";
+%flip[1] = "(╯°□°)╯︵ ┻━┻";
+%flip[2] = "(*ﾉಥ益ಥ)ﾉ ┻━┻";
+
+%realsize = $length(%flip);
+
+say %flip[$rand($(%realsize-1))];

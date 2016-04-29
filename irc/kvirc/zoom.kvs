@@ -1,0 +1,61 @@
+#zoom
+#ZOOM
+#ZOOM (bold)
+#ZOOM (bold, underlined)
+#ZOOM (bold, underlined, white background, black font)
+# Z O O M (bold, underlined, white background, black font)
+#  Z  O  O  M (bold, underlined, white background, black font)
+#   Z   O   O   M (bold, underlined, white background, black font)
+#    Z    O    O    M (bold, underlined, white background, black font)
+
+%upper = $str.upcase($0-);
+%length = $str.len(%upper);
+
+%one = " ";
+%two = "  ";
+%three = "   ";
+%four = "    ";
+
+%len1 = %length;
+%len1*=2;
+%len2 = %length;
+%len2*=3;
+%len3 = %length;
+%len3*=4;
+%len4 = %length;
+%len4*=5;
+
+say $0-;
+say %upper;
+say $b%upper;
+say $b$u%upper;
+say $k(1,0)$b$u%upper;
+%result = %upper;
+
+for(%i = 0; %i <= %len1; %i++){
+	%result = $str.insert(%result, %one, %i);
+	%i++;
+}
+say $k(1,0)$b$u%result;
+%result = %upper;
+
+for(%i = 0; %i <= %len2; %i++){
+	%result = $str.insert(%result, %two, %i);
+	%i+=2;
+}
+say $k(1,0)$b$u%result;
+%result = %upper;
+
+for(%i = 0; %i <= %len3; %i++){
+	%result = $str.insert(%result, %three, %i);
+	%i+=3;
+}
+say $k(1,0)$b$u%result;
+%result = %upper;
+
+for(%i = 0; %i <= %len4; %i++){
+	%result = $str.insert(%result, %four, %i);
+	%i+=4;
+}
+say $k(1,0)$b$u%result;
+%result = %upper;

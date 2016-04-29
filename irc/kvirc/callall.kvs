@@ -1,0 +1,12 @@
+%result = "";
+
+%nicks = $chan.users();
+%length = $length(%nicks);
+
+for(%i = 0; %i < %length; %i++){
+
+	%tmp = $str.append(%nicks[%i], " ");
+	%result = $str.append(%result, %tmp);
+}
+
+say %result;

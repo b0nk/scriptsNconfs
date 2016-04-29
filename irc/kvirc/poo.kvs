@@ -1,0 +1,18 @@
+if($0 == 1){
+	say My poo is in the toilet,;
+	say it is also on the floor.;
+	say Why did I poo so quickly?;
+	say I want to poo some more.;
+}
+if($0 == 2){
+	say My bottom is all stingy.;
+	say My willie 'tis not right.;
+	say Or how I yearn for next time,;
+	say to fart, and spray, and shite.;
+}
+if($0 == 3){
+	say Now it is time to wipe it,;
+	say my bottom, and my balls!;
+	say I better wash the carpet,;
+	say and redecorate the walls.;
+}

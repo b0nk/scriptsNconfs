@@ -1,0 +1,18 @@
+%data = $string($0-);
+%colors = $array(4,7,8,3,12,2,6);
+%len = $length(%data);
+%count = $length(%colors);
+for(%i = 0; %i <= $(%len - 1); %i++){
+	if(%i >= %count){
+		%num = $(%i - %count);
+		while(%num >= %count){
+			%num = $(%num - %count);
+		}
+	}
+	else{
+		%num = %i;
+	}
+	%tmp_str = $k(%colors[%num])$b$b$str.mid(%data,%i,1)$k();
+	%colored_str = $str.append(%colored_str,%tmp_str);
+}
+say %colored_str;

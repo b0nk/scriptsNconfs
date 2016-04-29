@@ -1,0 +1,8 @@
+%type = $window.type();
+
+window.clearOutput
+
+if(%type == "channel")
+	topic;
+if(%type == "console")
+	motd;

@@ -1,0 +1,15 @@
+#20
+
+for(%i = 0; %i < 20; %i++){
+	
+	%rand1 = $rand(15);
+	%rand2 = $rand(15);
+	if(%rand1 == %rand2){
+		%rand1 = $rand(15);
+	}
+	%tmp = $k(%rand1,%rand2);
+	%tmp2 = $str.append(%tmp, $0-);
+	%result = $str.append(%result, %tmp2);
+}
+
+say %result;

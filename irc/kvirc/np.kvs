@@ -1,0 +1,9 @@
+#use AMIP
+#fb2k format
+# [%artist% ][- %title%] - ['['%album%] - [%date%']' ]| %codec% [%codec_profile% ]@ '['%bitrate% kbps']'
+if($mediaplayer.status() != "playing"){
+	echo $str.upcase($mediaplayer.player())'s status is $mediaplayer.status();
+}
+else{
+	me "listens to: $mediaplayer.nowplaying()";
+}

@@ -1,0 +1,37 @@
+if($0 == "q" || $0 == "c" || $0 == "a" || !$0){
+	if($0 == "q"){
+		if($window.list(query)){
+			foreach(%i,$window.list(query))
+				window.clearOutput %i;
+			}
+	}
+	if($0 == "c"){
+		if($window.list(channel)){
+			foreach(%i,$window.list(channel)){
+				window.clearOutput %i;
+				if($1 == "t")
+					topic $target(%i);
+			}
+		}
+	}
+	if($0 == "a" || !$0){
+		foreach(%i,$window.list(all)){
+			window.clearOutput %i;
+			%type = $window.type(%i);
+
+			if(%type == "channel" && $1 == "t")
+				topic $target(%i);
+			if(%type == "console" && $1 == "t")
+				motd $target(%i);
+		}
+	}
+}
+else{
+	echo "Bad arguments!";
+	echo "Usage: /clearall <arg1> <arg2>";
+	echo "No arguments will clear all windows";
+	echo "arg1: c -> channels";
+	echo "arg1: q -> querys";
+	echo "arg1: a -> all windows";
+	echo "arg2: t -> prints channel topic and motd after clearing (OPTIONAL) (do not use with 'q')";
+}

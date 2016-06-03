@@ -65,7 +65,7 @@ def getProxies():
 
   h1 = httplib2.Http(disable_ssl_certificate_validation = True, timeout = 10)
   for i in proxy_srcs:
-    r, cont = h1.request(i, 'GET', headers = {'user-agent':'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Firefox/24.0'})
+    r, cont = h1.request(i, 'GET', headers = {'user-agent':'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:46.0) Gecko/20100101 Firefox/46.0'})
     rawList = re.findall('{.*?}', cont)
     for j in rawList:
       try:
@@ -98,11 +98,11 @@ def f7(seq):
 
 def openLink(h, cc, headers):
   try:
-    ticketURL = "http://schetu.net/h?cid=coinurl&a=t&r="
+    ticketURL = "http://schetu.net/h?cid=coinurl&a=t&r=http://cur.lv/"
     myprint(3, "Getting ticket...")
     r, cont = h.request(ticketURL, "GET", headers = headers)
     ticket = cont.split("('")[1].rstrip("');")
-    link = 'http://coinurl.com/redirect.php?code=%s&ticket=%s&r='
+    link = 'http://cur.lv/redirect_curlv.php?code=%s&ticket=%s&r=http://cur.lv/'
     myprint(3, "Connecting: %s ..." % link % (cc, ticket))
     r2, cont = h.request(link % (cc, ticket), "GET", headers = headers)
     if r2:
@@ -126,21 +126,21 @@ def visitLinks():
       myprint(2, 'Current proxy list: Success/Fail -> %s/%s | (%s/%s) | %.1f%%' % (win, fail, (win+fail)+1, total, (((win+fail+1.0)/total))*100.0))
       proxy = proxyList.pop()
       ip = proxy.split(':')[0]
-      port = int(proxy.split(':')[1])
+      port = int(proxy.split(':')[1], 16)
       myprint(2, 'Using proxy %s port %s' % (ip, port))
       h2 = httplib2.Http(disable_ssl_certificate_validation = True, timeout = 10,
                          proxy_info = httplib2.ProxyInfo(proxy_type = socks.PROXY_TYPE_HTTP, proxy_host = ip, proxy_port = port))
       headers = {'user-agent': random.choice(userAgents)}
       curl_code = random.choice(curl_codes)
       proc = pool.apply_async(func = openLink, args = (h2, curl_code, headers))
-      res = proc.get(timeout = 20)
+      res = proc.get(timeout = 11)
       if res:
         win += 1
         c = random.randint(1,4)
         while c > 0:
           curl_code = random.choice(curl_codes)
           proc = pool.apply_async(func = openLink, args = (h2, curl_code, headers))
-          proc.get(timeout = 20)
+          proc.get(timeout = 11)
           c -= 1
       else:
         fail += 1

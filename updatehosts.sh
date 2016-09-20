@@ -32,7 +32,7 @@ temphosts=$(mktemp)
 wget -nv -O - http://someonewhocares.org/hosts/hosts >> $temphosts
 wget -nv -O - http://winhelp2002.mvps.org/hosts.txt >> $temphosts
 wget -nv -O - http://www.malwaredomainlist.com/hostslist/hosts.txt >> $temphosts
-wget -nv -O - http://adblock.gjtech.net/?format=hostfile >> $temphosts
+## wget -nv -O - http://adblock.gjtech.net/?format=hostfile >> $temphosts
 wget -nv -O - http://hosts-file.net/ad_servers.txt >> $temphosts
 wget -nv -O - "http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext" >> $temphosts
 wget -nv -O - http://sysctl.org/cameleon/hosts.win >> $temphosts

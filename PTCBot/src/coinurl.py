@@ -76,7 +76,8 @@ def getProxies():
         if 'OK' in status and 'Elite' or 'Anonymous' in ptype:
           ip = item[2].split(':')[1].strip('"').lstrip("0")
           port = item[4].split(':')[1].strip('"')
-          proxyList.append("%s:%s" % (ip, port))
+          port = int(port, 16)
+          proxyList.append("%s:%d" % (ip, port))
       except(IndexError, ValueError):
         None
       except(socket.error) as e:
@@ -126,7 +127,7 @@ def visitLinks():
       myprint(2, 'Current proxy list: Success/Fail -> %s/%s | (%s/%s) | %.1f%%' % (win, fail, (win+fail)+1, total, (((win+fail+1.0)/total))*100.0))
       proxy = proxyList.pop()
       ip = proxy.split(':')[0]
-      port = int(proxy.split(':')[1], 16)
+      port = int(proxy.split(':')[1])
       myprint(2, 'Using proxy %s port %s' % (ip, port))
       h2 = httplib2.Http(disable_ssl_certificate_validation = True, timeout = 10,
                          proxy_info = httplib2.ProxyInfo(proxy_type = socks.PROXY_TYPE_HTTP, proxy_host = ip, proxy_port = port))

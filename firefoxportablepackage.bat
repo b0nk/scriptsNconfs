@@ -7,6 +7,8 @@ set fxp_profile=%fxp_home%App\DefaultData\profile\
 set fxp_plugins=%fxp_home%App\DefaultData\plugins\
 set fxp_install=%fxp_home%App\Firefox\
 
+set flash_xpi=https://addons.mozilla.org/firefox/downloads/file/519940/playflash_32bit-23.0.0.185-fx+sm-windows.xpi
+
 title Installing Firefox Portable
 start /WAIT FirefoxPortable.paf.exe
 
@@ -59,7 +61,7 @@ del /F /Q %fxp_install%webapp-uninstaller.exe
 
 rmdir /S /Q %fxp_home%App\Firefox64
 
-wget "https://addons.mozilla.org/firefox/downloads/file/504939/playflash_32bit-23.0.0.162-fx+sm-windows.xpi" -O "%fxp_plugins%playflash_32bit-23.0.0.162-fx+sm-windows.xpi"
+wget "%flash_xpi%" -O "%fxp_plugins%playflash_32bit-23.0.0.185-fx+sm-windows.xpi"
 
 title Creating SFX package
 start /B /LOW /WAIT 7z a -mx9 -mmt -y -sfx FirefoxPortable.exe %fxp_home%

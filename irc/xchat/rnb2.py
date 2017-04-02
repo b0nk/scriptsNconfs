@@ -6,6 +6,7 @@ __author__ = "b0nk"
 import xchat as XC
 from random import randint
 
+
 def make_a_cancer(word, word_eol, userdata):
 
   COLOR = '\003'
@@ -14,17 +15,17 @@ def make_a_cancer(word, word_eol, userdata):
   cancered = ''
   i = 0
   while i < 20:
-  
+
     ran1 = randint(3, 15)
     ran2 = randint(3, 15)
-    
+
     if ran1 == ran2:
       ran2 = randint(3, 15)
-    
+
     cancered += "%s%d,%d" % (COLOR, ran1, ran2) + original
     i += 1
-  
-  XC.command('echo %s' % (cancered))
+
+  XC.command('say %s' % (cancered))
 
 XC.hook_command("rnb2", make_a_cancer, help="/rnb2 <text>")
 XC.prnt(__module_name__ + ' version ' + __module_version__ + ' loaded.')

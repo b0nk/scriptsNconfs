@@ -5,6 +5,7 @@ __author__ = "b0nk"
 
 import xchat as XC
 
+
 def make_a_rainbow(word, word_eol, userdata):
 
   original = XC.strip(word_eol[1])
@@ -15,18 +16,18 @@ def make_a_rainbow(word, word_eol, userdata):
   COLOR = '\003'
   i = 0
   num = 0
-  
+
   while(i <= length - 1):
 
     if(i >= counter):
       num = i - counter
-    
+
       while(num >= counter):
         num -= counter
-      
+
     else:
       num = i
-    
+
     tmp = COLOR + sequence[num] + original[i]
     colored = colored + tmp
     i += 1

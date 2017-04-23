@@ -1,7 +1,10 @@
 import requests
-import re
-from sys import argv, stdout, getfilesystemencoding
 import os
+import re
+import json
+import urllib
+from sys import argv, stdout, getfilesystemencoding
+
 
 validExt = ['.jpg', '.jpeg', '.gif', '.png', '.webm']
 
@@ -18,13 +21,23 @@ def print_console(*args):
   except TypeError:
     print args
 
+def getValidBoards():
+  boards = []
+
+  l = json.load(urllib.urlopen('https://a.4cdn.org/boards.json'))
+
+  for i in l['boards']:
+    boards.append(str(i['board']))
+
+  return boards
+
 
 def goget(board, threadNo):
   baseURL = "https://i.4cdn.org/%s/%s%s"
   print "Connecting..."
   thread = requests.get('https://a.4cdn.org/%s/thread/%s.json' % (board, threadNo)).json()
   print "Processing..."
-  
+
   total = len(thread['posts'])
   print "found %d posts" % total
 
@@ -37,10 +50,10 @@ def goget(board, threadNo):
       continue
 
     link = baseURL % (board, timestamped, ext)
-    
+
     if ext == '.jpeg':
       ext = '.jpg'
-      
+
     original = threadNo + '-' + unicode(timestamped) + ext
     pic = requests.get(link, stream=True)
     if pic.status_code == 200:
@@ -62,16 +75,38 @@ def goget(board, threadNo):
       else:
         print_console(u"%s already retrieved" % original)
         pic = None
-if len(argv) < 2:
-  print "missing arg"
-  exit(1)
 
-regex = re.search("http[s]?://boards.4chan.org/(\w+)/thread/(\d+)", argv[1])
-if len(regex.groups()) != 2:
-  print "bad url"
-  exit(1)
+board = None
+threadNo = None
 
-board = regex.group(1)
-threadNo = regex.group(2)
+if len(argv) == 2:
+  regex = re.search("http[s]?://boards.4chan.org/(\w+)/thread/(\d+)", argv[1])
+  if regex and len(regex.groups()) == 2:
+    board = regex.group(1)
+    threadNo = regex.group(2)
+  else:
+    print "bad url"
+    exit(1)
+
+elif len(argv) == 3:
+  board = argv[1]
+  threadNo = argv[2]
+
+  # check if it's a board and a number
+  print "Verifying args..."
+  if not threadNo.isdigit():
+    print "%s is not a thread number" % threadNo
+    exit(1)
+
+  valid_boards = getValidBoards()
+  if board not in valid_boards:
+    print "/%s/ is not a real board" % board
+    exit(1)
+
+
+
+else:
+  print "bad args! Usage: $ getthread.py [link to thread] | [board] [threadNumber]"
+  exit(1)
 
 goget(board, threadNo)

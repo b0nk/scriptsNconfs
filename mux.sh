@@ -11,7 +11,7 @@ rm ./*_isotmp 2>/dev/null ;
 
 for i in *.$FILETYPE ; do
   FRAMERATE=$(mediainfo --Output=Video\;%FrameRate% "$i");
-  ACODEC=$(mediainfo --Output=Audio\;%Format% "$i");
+  ACODEC=$(mediainfo --Output=Audio\;%Format%\\n "$i" | sed -n "$ASTREAM"p);
   FILENAME=$(basename "$i" .$FILETYPE);
 
   ASETTINGS="-map 0:$ASTREAM -c:a copy -map_metadata -1"

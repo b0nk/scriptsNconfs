@@ -33,12 +33,12 @@ for i in *."$FILETYPE" ; do
     ASETTINGS="-map 0:$ASTREAM -c:a ac3 -b:a 640k -map_metadata -1"
   fi
 
-  if [ "$SSTREAM" -ne 0 ] ;
+  if [ $SSTREAM -ne 0 ] ;
   then
     SUBS="-map 0:$SSTREAM -c:s copy $FILENAME.srt"
   fi
 
-  ffmpeg -i "$i $VSETTINGS $VFILE $ASETTINGS $AFILE $SUBS" -y -hide_banner ;
+  ffmpeg -i "$i" "$VSETTINGS" $VFILE "$ASETTINGS" $AFILE "$SUBS" -y -hide_banner ;
   rc=$?
 
   if [ $rc -ne 0 ] ;

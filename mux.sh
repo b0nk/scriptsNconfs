@@ -1,9 +1,9 @@
 #!/bin/sh
 
 FILETYPE=mkv
-DELETE=0
-ASTREAM=1
-SSTREAM=0
+DELETE=1
+ASTREAM=$1
+SSTREAM=$2
 AFILE=0a.ac3
 VFILE=0v.264
 ASETTINGS="-map 0:$ASTREAM -c:a copy -map_metadata -1"
@@ -15,6 +15,9 @@ for i in *."$FILETYPE" ; do
   ACODEC=$(mediainfo --Output=Audio\;%Format%\\n "$i" | sed -n "$ASTREAM"p);
   ABITRATE=$(mediainfo --Output=Audio\;%BitRate%\\n "$i" | sed -n "$ASTREAM"p);
   FILENAME=$(basename "$i" .$FILETYPE);
+
+  [ -z "$1" ] && ASTREAM=1 ;
+  [ -z "$2" ] && SSTREAM=0 ;
 
   if [ "$VCODEC" = "HEVC" ] ;
   then
@@ -38,7 +41,7 @@ for i in *."$FILETYPE" ; do
     SUBS="-map 0:$SSTREAM -c:s copy $FILENAME.srt"
   fi
 
-  ffmpeg -i "$i" "$VSETTINGS" $VFILE "$ASETTINGS" $AFILE "$SUBS" -y -hide_banner ;
+  ffmpeg -i "$i" $VSETTINGS $VFILE $ASETTINGS $AFILE $SUBS -y -hide_banner ;
   rc=$?
 
   if [ $rc -ne 0 ] ;

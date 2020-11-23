@@ -17,13 +17,8 @@ for i in *."$FILETYPE" ; do
   FILENAME=$(basename "$i" .$FILETYPE);
 
   [ -z "$1" ] && ASTREAM=1 ;
-  [ -z "$2" ] && SSTREAM=0 ;
 
-  if [ "$VCODEC" = "HEVC" ] ;
-  then
-    VSETTINGS="-c:v copy -map_metadata -1 -bsf:v hevc_mp4toannexb"
-    VFILE=0v.265
-  fi
+  [ "$VCODEC" = "HEVC" ] && VSETTINGS="-c:v copy -map_metadata -1 -bsf:v hevc_mp4toannexb" && VFILE=0v.265
 
   if [ "$ACODEC" = "AAC" ] ;
   then
@@ -36,10 +31,7 @@ for i in *."$FILETYPE" ; do
     ASETTINGS="-map 0:$ASTREAM -c:a ac3 -b:a 640k -map_metadata -1"
   fi
 
-  if [ $SSTREAM -ne 0 ] ;
-  then
-    SUBS="-map 0:$SSTREAM -c:s copy $FILENAME.srt"
-  fi
+  [ -n "$SSTREAM" ] && SUBS="-map 0:$SSTREAM -c:s copy $FILENAME.srt"
 
   ffmpeg -i "$i" $VSETTINGS $VFILE $ASETTINGS $AFILE $SUBS -y -hide_banner ;
   rc=$?

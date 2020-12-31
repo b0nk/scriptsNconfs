@@ -3,20 +3,21 @@
 FILETYPE=mkv
 DELETE=1
 ASTREAM=$1
+ASTREAMI=$1
 SSTREAM=$2
 AFILE=0a.ac3
 VFILE=0v.264
 ASETTINGS="-map 0:$ASTREAM -c:a copy -map_metadata -1"
 VSETTINGS="-c:v copy -map_metadata -1 -bsf:v h264_mp4toannexb"
 
+[ -z "$1" ] || [ "0" = "$1" ] && ASTREAMI=1 ;
+
 for i in *."$FILETYPE" ; do
   VCODEC=$(mediainfo --Output=Video\;%Format% "$i");
   FRAMERATE=$(mediainfo --Output=Video\;%FrameRate% "$i");
-  ACODEC=$(mediainfo --Output=Audio\;%Format%\\n "$i" | sed -n "$ASTREAM"p);
-  ABITRATE=$(mediainfo --Output=Audio\;%BitRate%\\n "$i" | sed -n "$ASTREAM"p);
+  ACODEC=$(mediainfo --Output=Audio\;%Format%\\n "$i" | sed -n "$ASTREAMI"p);
+  ABITRATE=$(mediainfo --Output=Audio\;%BitRate%\\n "$i" | sed -n "$ASTREAMI"p);
   FILENAME=$(basename "$i" .$FILETYPE);
-
-  [ -z "$1" ] && ASTREAM=1 ;
 
   [ "$VCODEC" = "HEVC" ] && VSETTINGS="-c:v copy -map_metadata -1 -bsf:v hevc_mp4toannexb" && VFILE=0v.265
 

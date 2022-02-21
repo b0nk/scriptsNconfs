@@ -5,7 +5,7 @@
 
 #define TOTAL_DIRECTIONS 16
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
 
 	if(argc != 2) {
 		printf("Usage %s <degrees> \n", argv[0]);
@@ -13,8 +13,8 @@ int main(int argc, char *argv[]) {
 	}
 
 	// char pointer for double conversion
-	char *dptr;
-	double bearing = strtod(argv[1], &dptr);
+	char* nptr;
+	double bearing = strtod(argv[1], &nptr);
 
 	if (bearing == 0) {
         	/* If the value provided was out of range, display a warning message */
@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
 			return 2;
 		}
 	}
-	char *directions[TOTAL_DIRECTIONS] = {"N", "NNW", "NW", "WNW", "W", "WSW", "SW", "SSW",
+	char* directions[TOTAL_DIRECTIONS] = {"N", "NNW", "NW", "WNW", "W", "WSW", "SW", "SSW",
 					      "S", "SSE", "SE", "ESE", "E", "ENE", "NE", "NNE"};
 
 	double degree = bearing / (360 / TOTAL_DIRECTIONS);

@@ -25,9 +25,16 @@ for i in *."$FILETYPE" ; do
 
   [ "$VCODEC" = "HEVC" ] && VSETTINGS="-c:v copy -map_metadata -1 -bsf:v hevc_mp4toannexb" && VFILE=0v-$RND.265
 
-  [ "$ACODEC" = "AAC" ] && AFILE=0a-$RND.aac
-  [ "$ACODEC" = "E-AC-3" ] && ASETTINGS="-map 0:$ASTREAM -c:a ac3 -b:a $ABITRATE -map_metadata -1"
-  [ "$ACODEC" != "AC-3" ] && ASETTINGS="-map 0:$ASTREAM -c:a ac3 -b:a 640k -map_metadata -1"
+  if [ "$ACODEC" = "AAC" ] ;
+  then
+    AFILE=0a-$RND.aac
+  elif [ "$ACODEC" = "E-AC-3" ] ;
+  then
+    ASETTINGS="-map 0:$ASTREAM -c:a ac3 -b:a $ABITRATE -map_metadata -1"
+  elif [ "$ACODEC" != "AC-3" ] ;
+  then
+    ASETTINGS="-map 0:$ASTREAM -c:a ac3 -b:a 640k -map_metadata -1"
+  fi
 
   [ -n "$SSTREAM" ] && SUBS="-map 0:$SSTREAM -c:s copy $FILENAME.srt"
 
@@ -41,7 +48,8 @@ for i in *."$FILETYPE" ; do
          -add "$WORKINGDIR/$AFILE#trackID=1:name=" -tmp "$WORKINGDIR" -new "$FILENAME.mp4" ;
   rc=$?
 
-  [ $rc -eq 0 ] && rm "$WORKINGDIR"/$AFILE "$WORKINGDIR"/$VFILE 2>/dev/null || echo ERROR on MP4Box : "$i" && exit 2
+  [ $rc -eq 0 ] && rm "$WORKINGDIR"/$AFILE "$WORKINGDIR"/$VFILE 2>/dev/null
+  [ $rc -ne 0 ] && echo ERROR on MP4Box : "$i" && exit 2
 
 done
 

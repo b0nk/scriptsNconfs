@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <math.h>
 
 #define TOTAL_DIRECTIONS 16
 
@@ -29,7 +30,7 @@ int main(int argc, char* argv[]) {
 	double degree = bearing / (360 / TOTAL_DIRECTIONS);
 	int result = (int) degree;
 
-	printf("%0.2f.º is %s\n", bearing, directions[result % TOTAL_DIRECTIONS]);
+	printf("%0.2fº is %s (%0.2fº)\n", bearing, directions[result % TOTAL_DIRECTIONS], fmod(bearing, 360.));
 
 	return 0;
 }
